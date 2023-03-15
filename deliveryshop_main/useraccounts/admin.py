@@ -22,4 +22,16 @@ from .models import User
 #registering the user model
 # admin.site.register(User, CustomUserAdmin)
 
-admin.site.register(User)
+class CustomUserAdmin(UserAdmin):
+     #making the password field non editable
+     list_display = ('email', 'username', 'role','is_active','first_name','last_name')
+     filter_horizontal = ()
+     list_filter = ()
+     fieldsets = ()
+     #tuple with one element eneds a , at the end
+     ordering = ('email',)
+    #  list_display = ('email', 'username', 'role','is_active')
+    #  list_filter = ('email', 'is_staff', 'is_active',)
+    #  search_fields = ('email',)
+
+admin.site.register(User,CustomUserAdmin)
