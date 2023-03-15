@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, UserProfile
 
 # class CustomUserAdmin(UserAdmin):
 #     list_display = ('email', 'is_staff', 'is_active',)
@@ -24,7 +24,7 @@ from .models import User
 
 class CustomUserAdmin(UserAdmin):
      #making the password field non editable
-     list_display = ('email', 'username', 'role','is_active','first_name','last_name')
+     list_display = ('email','username', 'role','is_active','first_name','last_name')
      filter_horizontal = ()
      list_filter = ()
      fieldsets = ()
@@ -35,3 +35,4 @@ class CustomUserAdmin(UserAdmin):
     #  search_fields = ('email',)
 
 admin.site.register(User,CustomUserAdmin)
+admin.site.register(UserProfile)

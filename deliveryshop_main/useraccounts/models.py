@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.db.models import OneToOneField
+
 
 #rewriting the django user model so that it fits my model
 # Create your models here.
@@ -68,7 +70,7 @@ class User(AbstractBaseUser):
 
     #2-fields that are required
     date_joined = models.DateTimeField(auto_now_add=True)
-    last_login=models.DateTimeField(auto_now_add=True)
+    last_login=models.DateTimeField(auto_now=True)
     created_date=models.DateTimeField(auto_now=True)
     modified_date = models.DateTimeField(auto_now=True)
     is_admin = models.BooleanField(default=False)
@@ -87,8 +89,7 @@ class User(AbstractBaseUser):
     
     def __str__(self):
         return self.email
-
-    
+   
     #it will return true if the user is  an admin
     def has_perm(self,perm,obj=None):
         return self.is_admin
@@ -98,3 +99,29 @@ class User(AbstractBaseUser):
     #it will return true if the user is  a active superuser
     def has_module_perms(self,app_label):
         return True
+
+class UserProfile(models.Model):
+    user = OneToOneField(User,on_delete=models.CASCADE,blank=True,null=True)
+    #if the user is deleted his user profile also should be deleted
+    #profile_picture and cover_photo
+    #The upload_to argument specifies the directory path within the MEDIA_ROOT directory where the uploaded image file will be stored. 
+    #blank=True means that the field is allowed to be blank, the user is allowed to not write values
+    #null=True means that the field is allowed to be NULL in the database
+    profile_picture = models.ImageField(upload_to='users/profile_pictures',blank=True,null=True)
+    #must install pillow library whenevr imagefield is used
+    cover_photo = models.ImageField(upload_to='users/cover_photo',blank=True,null=True)
+    address_line_1=models.CharField(max_length=50,blank=True,null=True)
+    address_line_2=models.CharField(max_length=50,blank=True,null=True)
+    country=models.CharField(max_length=15,blank=True,null=True)
+    state=models.CharField(max_length=15,blank=True,null=True)
+    city=models.CharField(max_length=15,blank=True,null=True)
+    pincode=models.CharField(max_length=6,blank=True,null=True)
+    longitude=models.CharField(max_length=20,blank=True,null=True)
+    latitude=models.CharField(max_length=20,blank=True,null=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    #auto_now_add=True is set, Django will automatically set the value of the field to the current date 
+    # and time when a new instance of the model is created
+    modified_at=models.DateTimeField(auto_now=True)
+    #__str__() is defined to return the email address of the user associated with that profile
+    def __str__(self):
+        return self.user.email
