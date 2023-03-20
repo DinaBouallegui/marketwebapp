@@ -143,3 +143,6 @@ class UserProfile(models.Model):
                 UserProfile.objects.create(user=instance)
                 print("profile wasn't existing but I created one")
             print('user is updated')
+
+    #creating a pre saved signal for the User
+
