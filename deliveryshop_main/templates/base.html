@@ -34,14 +34,11 @@
 <body>
 
      <!-- LOAD HEADER HERE  -->
-        {% include 'includes/header.html'%}
-     
+        {% include 'includes/header.html'%}    
      <!-- LOAD CONTENT HERE -->
-        {% endblock %}
+        {% block content %}
             <!-- CONTENT GOES HERE  -->
-        {% endblock %}
-
-        
+        {% endblock %}     
      <!-- LOAD FOOTER HERE  -->
       {% include 'includes/footer.html'%}
 

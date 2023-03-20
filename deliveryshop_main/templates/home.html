@@ -1,5 +1,9 @@
+{% extends 'base.html' %}
+<!--this will add the header and footer inside this home.html-->
 {% load static %}
 <!--Main Wrapper-->
+
+{% block content %}
 <div class="wrapper">
 	<!-- Main Section Start -->
 	<div class="main-section">
@@ -235,4 +239,6 @@
 		<!-- Home Pages Elements End  -->
 	</div>
 	<!-- Main Section End -->
+
 </div>
+{% endblock %}
