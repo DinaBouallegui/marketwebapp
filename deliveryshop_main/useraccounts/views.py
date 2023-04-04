@@ -4,6 +4,7 @@ from .forms import UserForm
 from django.shortcuts import redirect
 from .models import User
 from django.contrib import messages
+from vendor.forms import VendorForm
 
 # Create your views here.
 def registerUser(request):
@@ -48,4 +49,11 @@ def registerUser(request):
     return render(request,'useraccounts/registerUser.html', context)
 
 def registerVendor(request):
-    return render(request,'useraccounts/registerVendor.html')
+    form = UserForm()
+    v_form = VendorForm()
+
+    context = {
+        'form': form,
+        'v_form': v_form,
+    }
+    return render(request,'useraccounts/registerVendor.html',context)
