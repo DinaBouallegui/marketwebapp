@@ -52,11 +52,11 @@ class UserManager (BaseUserManager):
 #we use ABSTRACTBASEUSER because you want to have full control over djangos user model
 
 class User(AbstractBaseUser):
-    RESTAURANT = 1
+    VENDOR = 1
     CUSTOMER = 2
 
     ROLE_CHOICE = (
-        (RESTAURANT,'Restaurant'),
+        (VENDOR,'Restaurant'),
         (CUSTOMER,'Customer'),
     )
     #1-adding the fields of the user model
