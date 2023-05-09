@@ -3,12 +3,40 @@ from django.shortcuts import render
 from .forms import UserForm
 from django.shortcuts import redirect
 from .models import User, UserProfile
-from django.contrib import messages
+from django.contrib import messages,auth
 from vendor.forms import VendorForm
+from .utils import detectUser
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
+
+#custom decorate is here and 
+# Restricting the Vendor/Restaurant from accessing the customer page
+
+def check_role_vendor(user):
+    if user.role ==1:
+        return True
+    else:
+        raise PermissionDenied
+
+
+def check_role_customer(user):
+    if user.role == 2:
+        return True
+    else:
+        raise PermissionDenied
+
+
+#Restricting the customer from accessing the vendor page
+
 def registerUser(request):
-    if request.method == 'POST':
+
+    if request.user.is_authenticated:
+        messages.warning(request,'You are already logged in')
+        return redirect('dashboard')
+    
+    elif request.method == 'POST':
         print(request.POST)
         form = UserForm(request.POST)
         if form.is_valid():
@@ -90,11 +118,53 @@ def registerVendor(request):
     return render(request,'useraccounts/registerVendor.html',context)
 
 def login(request):
+
+    # if the use is already logged in and tried to log in again
+    if request.user.is_authenticated:
+        messages.warning (request,'You are already logged in')
+        # redirect him to the dashboard page
+        return redirect('myAccount')
+
+    elif request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+      # the authenticate function will take the email and password and will return the user to whom this email and password belongs to
+        user = auth.authenticate(email = email, password = password)
+        #if we can get the user we can just log in
+        if user is not None:
+            #login() is a function of auth package and it will allow to log him in
+            auth.login(request, user)
+            messages.success(request,'You are now logged in.')
+            # if the user is logged in he is redirected to the dashboard
+            return redirect('myAccount')
+        else:
+            messages.error(request,'The login credentials are invalid')
+            #it will redirect to the login page
+            return redirect('login')
     return render(request,'useraccounts/login.html')
 
 def logout(request):
-    return
+    auth.logout(request)
+    messages.info(request,'Now you are logged out :( ')
+    return redirect('login')
 
-def dashboard(request):
-    return
+#function that decides whether the person who is logging in is a customer or a vendor
+#if you're not logged in you're not supported to enter to this view
+#if the user is not logged it and tries to access useraccounts/myAccount he will be send to login page
 
+@login_required(login_url='login')
+def myAccount(request):
+    user = request.user
+    redirectUrl = detectUser(user)
+    return redirect(redirectUrl)
+
+# same thing customer dashborad should only be accessible when the user is logged in
+@login_required(login_url='login')
+@user_passes_test(check_role_customer)
+def customerDashboard(request): 
+    return render(request,'useraccounts/customerDashboard.html')
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def vendorDashboard(request): 
+    return render(request,'useraccounts/vendorDashboard.html')
