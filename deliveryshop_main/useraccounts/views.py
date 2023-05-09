@@ -88,3 +88,13 @@ def registerVendor(request):
         'v_form': v_form,
     }
     return render(request,'useraccounts/registerVendor.html',context)
+
+def login(request):
+    return render(request,'useraccounts/login.html')
+
+def logout(request):
+    return
+
+def dashboard(request):
+    return
+
