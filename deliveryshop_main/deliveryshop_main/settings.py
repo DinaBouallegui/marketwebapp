@@ -146,3 +146,14 @@ MESSAGE_TAGS = {
     #in bootstrap danger class means it will be highlighted in red
     messages.ERROR: 'danger',
 }
+
+# Configuring the emails
+# using the gmail host
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+#The email that will send the emails to the users is my email for now 
+# will change that later to dinas.diner@gmail.com
+EMAIL_HOST_USER = 'dinabouallegui00@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ti-nspire2018'
+#the email will be send securily:
+EMAIL_USE_TLS = True

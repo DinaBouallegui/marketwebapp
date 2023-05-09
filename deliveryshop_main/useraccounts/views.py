@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from .models import User, UserProfile
 from django.contrib import messages,auth
 from vendor.forms import VendorForm
-from .utils import detectUser
+from .utils import detectUser, send_verification_email
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 
@@ -60,6 +60,10 @@ def registerUser(request):
             user.role = User.CUSTOMER
             #saving the user to the database
             user.save()
+            # we send a verification email right after we save the user 
+            #helper function that send the verification email
+            send_verification_email(request,user)
+
             print('User is created')
             #displaying a message after the user registration
             messages.success(request, 'Your account has been registered successfully!')
@@ -101,6 +105,8 @@ def registerVendor(request):
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile
             vendor.save()
+            #here sending the verification email
+            send_verification_email(request,user)
             messages.success(request,'Congratulations! Your account has been registered successfully! Wait for approval')
         else: 
             print('invalid form')
@@ -168,3 +174,8 @@ def customerDashboard(request):
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request): 
     return render(request,'useraccounts/vendorDashboard.html')
+
+
+def activate(request, uidb64,token):
+    #Activate the user by setting the is_active status to True
+    return

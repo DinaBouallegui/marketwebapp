@@ -1,3 +1,9 @@
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
 #this file contains any helper function we need to run my features
  
 #this function will help to detect the user
@@ -12,4 +18,27 @@ def detectUser(user):
         redirectUrl = '/admin'
         return redirectUrl
     
+
+#this helper function will help to send verification email
+
+def send_verification_email(request,user):
+    current_site = get_current_site(request)
+    mail_subject ='Please activate your account' 
+    # this is going to be the body of the email:
+    message = render_to_string('useraccounts/emails/account_verfication_email.html', {
+# pass the values that I want to send to the file account_verfication_email.html
+    'user':user,
+    'domain': current_site,
+    #the encoded version of user's primary key
+    # The user primary key needs to be encoded before its send the the email
+    #encoding:
+    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+    'token': default_token_generator.make_token(user),
+    })
+    to_email = user.email
+    # EmailMessage used to send the email
+    mail = EmailMessage(mail_subject,message, to=[to_email])
+    mail.send()
+
+
 
