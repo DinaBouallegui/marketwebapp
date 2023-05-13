@@ -153,7 +153,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 #The email that will send the emails to the users is my email for now 
 # will change that later to dinas.diner@gmail.com
-EMAIL_HOST_USER = 'dinabouallegui00@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ti-nspire2018'
+EMAIL_HOST_USER = 'dinabouallegui0@gmail.com'
+EMAIL_HOST_PASSWORD = 'aundfmkkavhlytln'
 #the email will be send securily:
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Dinas Diner Delivery <dinabouallegui0@gmail.com>'
