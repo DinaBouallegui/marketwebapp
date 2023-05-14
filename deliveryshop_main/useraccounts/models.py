@@ -131,6 +131,10 @@ class UserProfile(models.Model):
     # and time when a new instance of the model is created
     modified_at=models.DateTimeField(auto_now=True)
     #__str__() is defined to return the email address of the user associated with that profile
+
+    def full_address(self):
+        return f'{self.address_line_1},{self.address_line_2}'
+    
     def __str__(self):
         return self.user.email
 

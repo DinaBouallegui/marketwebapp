@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'useraccounts.context_processors.get_vendor',
             ],
         },
     },
@@ -158,3 +159,4 @@ EMAIL_HOST_PASSWORD = 'aundfmkkavhlytln'
 #the email will be send securily:
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Dinas Diner Delivery <dinabouallegui0@gmail.com>'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

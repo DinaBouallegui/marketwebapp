@@ -10,6 +10,7 @@ from .utils import detectUser, send_verification_email
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.tokens import default_token_generator
+from vendor.models import Vendor
 
 
 # Create your views here.
@@ -176,7 +177,20 @@ def customerDashboard(request):
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request): 
+    #function for fetching the user's  profile details 
+    # request.user -> only the logged in user can enter inside this view 
+    #vendor = Vendor.objects.get(user= request.user)
+    #context = { 
+     #   'vendor': vendor, 
+    #}
+    #return render(request,'useraccounts/vendorDashboard.html', context )
     return render(request,'useraccounts/vendorDashboard.html')
+    # we can access vendor object only inside  useraccounts/vendorDashboard page for now
+    #I need access of the vendor object from every html page 
+    # this is possible using the concept of context processor => will give access to theobject inside every html page
+    # context processor is a function that takes only one argument which is request 
+    # -> return a dictionary that gets added to the request context -> this dictionary can be accessed ine very html page
+
 
 
 def activate(request, uidb64, token):
