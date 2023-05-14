@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'useraccounts.context_processors.get_vendor',
+                'useraccounts.context_processors.get_google_api',
             ],
         },
     },
@@ -160,3 +161,5 @@ EMAIL_HOST_PASSWORD = 'aundfmkkavhlytln'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Dinas Diner Delivery <dinabouallegui0@gmail.com>'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+GOOGLE_API_KEY = 'AIzaSyCX8iv1MAFd4joepHI6SreEMcdYbZAz_MI'
