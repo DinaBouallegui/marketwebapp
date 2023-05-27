@@ -1,12 +1,16 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from menu.forms import CategoryForm
 from useraccounts.views import check_role_vendor
 from useraccounts.forms import UserProfileForm
 from .forms import VendorForm
+from menu.models import Category,FoodItem
 
+from django.template.defaultfilters import slugify
 from useraccounts.models import UserProfile
 from .models import Vendor
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 
 # Create your views here.
@@ -45,3 +49,53 @@ def vendorProfile(request):
         'vendor': vendor,
     }
     return render(request, 'vendor/vendorProfile.html',context)
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def menu_builder(request):
+    #vendor = Vendor.objects.get(user=request.user)
+    vendor = get_vendor(request)
+    categories = Category.objects.filter(vendor= vendor)
+    context = {
+        'categories' : categories,
+    }
+    return render(request,'vendor/menu_builder.html',context)
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def fooditems_by_category(request, pk=None):
+    vendor = get_vendor(request)
+    category = get_object_or_404(Category, pk=pk)
+    fooditems = FoodItem.objects.filter(vendor=vendor,category=category)
+    context = {
+        'fooditems': fooditems,
+        'category': category,
+    }
+    return render(request, 'vendor/fooditems_by_category.html',context)
+
+# a helper function that helps to get the vendor object
+def get_vendor(request):
+    vendor = Vendor.objects.get(user=request.user)
+    return vendor
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid(): 
+            category_name = form.cleaned_data['category_name']
+            #save inside the database
+            category = form.save(commit=False)
+            #commit = false means this form is ready to be saved but not yet stored
+            # assigned the login user to the category vendor field
+            category.vendor = get_vendor(request)
+            # saligify will generate slug based on categoy_name
+            category.slug = slugify(category_name)
+            form.save()
+            messages.success(request,'Great!Category addedsuccessfully!')
+            return redirect('menu_builder')
+    else: 
+        form = CategoryForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'vendor/add_category.html', context)
