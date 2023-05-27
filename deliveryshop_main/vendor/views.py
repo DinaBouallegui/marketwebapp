@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from menu.forms import FoodItemForm
 from menu.forms import CategoryForm
 from useraccounts.views import check_role_vendor
 from useraccounts.forms import UserProfileForm
-from .forms import VendorForm
+from .forms import VendorForm 
 from menu.models import Category,FoodItem
 
 from django.template.defaultfilters import slugify
@@ -133,3 +134,36 @@ def delete_category(request, pk=None):
     category.delete()
     messages.success(request,'Category was deleted successfully!')
     return redirect('menu_builder')
+
+
+def add_food(request):
+    form = FoodItemForm()
+    context ={
+        'form' : form,
+    }
+    return render(request, 'vendor/add_food.html', context)
+
+
+def add_food(request):
+    if request.method == 'POST':
+        form = FoodItemForm(request.POST, request.FILES)
+        if form.is_valid(): 
+            foodtitle = form.cleaned_data['food_title']
+            #save inside the database
+            food = form.save(commit=False)
+            #commit = false means this form is ready to be saved but not yet stored
+            # assigned the login user to the category vendor field
+            food.vendor = get_vendor(request)
+            # saligify will generate slug based on categoy_name
+            food.slug = slugify(foodtitle)
+            form.save()
+            messages.success(request,'Great!Food Item added successfully!')
+            return redirect('fooditems_by_category',food.category.id)
+        else: 
+            print(form.errors)
+    else: 
+        form = FoodItemForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'vendor/add_food.html', context)
