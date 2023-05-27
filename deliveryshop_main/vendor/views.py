@@ -91,7 +91,7 @@ def add_category(request):
             # saligify will generate slug based on categoy_name
             category.slug = slugify(category_name)
             form.save()
-            messages.success(request,'Great!Category addedsuccessfully!')
+            messages.success(request,'Great!Category added successfully!')
             return redirect('menu_builder')
         else: 
             print(form.errors)
@@ -101,3 +101,35 @@ def add_category(request):
         'form': form,
     }
     return render(request, 'vendor/add_category.html', context)
+
+def edit_category(request, pk=None):
+    category = get_object_or_404(Category,pk=pk)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid(): 
+            category_name = form.cleaned_data['category_name']
+            #save inside the database
+            category = form.save(commit=False)
+            #commit = false means this form is ready to be saved but not yet stored
+            # assigned the login user to the category vendor field
+            category.vendor = get_vendor(request)
+            # saligify will generate slug based on categoy_name
+            category.slug = slugify(category_name)
+            form.save()
+            messages.success(request,'Category updated successfully!')
+            return redirect('menu_builder')
+        else: 
+            print(form.errors)
+    else: 
+        form = CategoryForm(instance=category)
+    context = {
+        'form': form,
+        'category': category,
+    }
+    return render(request, 'vendor/edit_category.html', context)
+
+def delete_category(request, pk=None):
+    category = get_object_or_404(Category, pk=pk)
+    category.delete()
+    messages.success(request,'Category was deleted successfully!')
+    return redirect('menu_builder')
