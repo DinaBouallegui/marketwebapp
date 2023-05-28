@@ -86,8 +86,10 @@ def registerUser(request):
 
 def registerVendor(request):
     # if it's a post request/means if user clicked on submit
-
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request,'You are already logged in!')
+        return redirect('myAccount')
+    elif request.method == 'POST':
         # storing the data 
         #passing the content from the post request
         form = UserForm(request.POST)
