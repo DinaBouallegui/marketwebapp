@@ -46,7 +46,7 @@
                                                             class="icon-delete text-color"></i></a>
                                                     <!-- making the id dynamic by appending food.id -->
 
-                                                    <label id="qty-{{food.id}}"> 0 </label>
+                                                    <label id="qty-{{ item.fooditem.id}}"> 0 </label>
 
                                                     <a href="#" class="add_to_cart" data-id="{{ item.fooditem.id }}"
                                                         data-url="{% url 'add_to_cart' item.fooditem.id %}"><i
