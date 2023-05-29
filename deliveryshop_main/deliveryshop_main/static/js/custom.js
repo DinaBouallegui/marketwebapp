@@ -99,7 +99,6 @@ $(document).ready(function() {
             url: url,
             data: data,
             success: function(response){
-                
                 console.log(response)
             }
         })
