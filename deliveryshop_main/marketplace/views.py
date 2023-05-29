@@ -110,5 +110,8 @@ def decrease_cart(request,food_id):
             return JsonResponse({'status': 'login_required', 'message': 'No no no :(( Please login to continue'})
 
 def cart(request):
-    print('test')
-    return render(request,'marketplace/cart.html')
+    cart_items = Cart.objects.filter(user=request.user)
+    context = {
+        'cart_items': cart_items,
+    }
+    return render(request,'marketplace/cart.html', context)

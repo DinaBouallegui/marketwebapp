@@ -14,6 +14,7 @@
 
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                     <div class="tabs-holder horizontal">
+
                         <ul class="stickynav-tabs nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#home"> 
                                 <i class="fa fa-shopping-cart text-danger" style="font-size:20px;"> </i> 
@@ -24,43 +25,42 @@
                             <div id="home" class="tab-pane in active">
                                 <div class="menu-itam-holder">
 
-                                    <div id="menu-item-list-6272" class="menu-itam-list">
-
-                                        {% for category in categories %}
-                                        <div class="element-title" id="menu-category-2">
-                                            <h5 class="text-color">{{ category }}</h5>
-                                            <span> {{category.description}}</span>
-                                        </div>
+                                    <div id="menu-item-list-6272" class="menu-itam-list">                               
                                         <ul>
-                                            {% for food in category.fooditems.all %}
-                                            <li>
+                                            {% if cart_items %}  
+                                                {% for item in cart_items %}
+                                                <li>
                                                 <div class="image-holder">
-                                                    <img src="{{ food.image.url }}" alt="">
+                                                    <img src="{{ item.fooditem.image.url }}" alt="">
                                                 </div>
                                                 <div class="text-holder">
-                                                    <h6> {{ food }}</h6>
-                                                    <span> {{food.description}}</span>
+                                                    <h6> {{ item.fooditem }}</h6>
+                                                    <span> {{ item.fooditem.description}}</span>
                                                 </div>
                                                 <div class="price-holder">
-                                                    <span class="price"> {{ food.price }} huf</span>
+                                                    <span class="price"> {{ item.fooditem.price }} huf</span>
 
-                                                    <a href="#" class="decrease_cart" data-id="{{ food.id }}"
-                                                        data-url="{% url 'decrease_cart' food.id %}"
+                                                    <a href="#" class="decrease_cart" data-id="{{ item.fooditem.id }}"
+                                                        data-url="{% url 'decrease_cart' item.fooditem.id %}"
                                                         style="margin-right:28px;"><i
                                                             class="icon-delete text-color"></i></a>
                                                     <!-- making the id dynamic by appending food.id -->
 
                                                     <label id="qty-{{food.id}}"> 0 </label>
 
-                                                    <a href="#" class="add_to_cart" data-id="{{ food.id }}"
-                                                        data-url="{% url 'add_to_cart' food.id %}"><i
+                                                    <a href="#" class="add_to_cart" data-id="{{ item.fooditem.id }}"
+                                                        data-url="{% url 'add_to_cart' item.fooditem.id %}"><i
                                                             class="icon-plus4 text-color"></i></a>
 
                                                 </div>
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                        {% endfor %}
+                                                </li>
+                                                {% endfor %}
+                                            {% else %}
+                                                <div class="text-center p-5">
+                                                    <h3> Cart is empty </h3>
+                                                </div>
+                                            {% endif %}  
+                                        </ul>    
                                     </div>
 
                                     {% for item in cart_items %}
