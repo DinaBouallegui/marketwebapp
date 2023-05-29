@@ -92,6 +92,7 @@ $(document).ready(function() {
         data= {
             food_id: food_id,
         }
+
         //once it takes the food id, it will send a request to this particular url using the Ajax
         $.ajax({
             type: 'GET',
@@ -99,6 +100,8 @@ $(document).ready(function() {
             data: data,
             success: function(response){
                 console.log(response)
+                $('#cart_counter').html(response.cart_counter['cart_count'])
+                $('#qty-'+food_id).html(response.qty); 
             }
         })
     })

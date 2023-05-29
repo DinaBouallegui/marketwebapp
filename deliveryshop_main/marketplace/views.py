@@ -1,5 +1,8 @@
+import traceback
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
+
+from .context_processors import get_cart_counter
 from .models import Cart
 from menu.models import Category, FoodItem
 
@@ -58,12 +61,12 @@ def add_to_cart(request, food_id):
                         # If the user has already added this particular item, increase the quantity
                         check_cart.quantity += 1
                         check_cart.save()
-                        return JsonResponse({'status': 'Success', 'message': 'The cart quantity increased'})
+                        return JsonResponse({'status': 'Success', 'message': 'The cart quantity increased','cart_counter': get_cart_counter(request), 'qty': check_cart.quantity })
                         # If the user didn't add that product to the cart
                     except:
                         # Create a new cart entry
                         check_cart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
-                        return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart'})
+                        return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart','cart_counter': get_cart_counter(request),'qty': check_cart.quantity })
                 except:
                     return JsonResponse({'status': 'Failed', 'message': 'This Food Item does not exist'})
             else:
