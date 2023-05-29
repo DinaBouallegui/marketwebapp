@@ -126,7 +126,10 @@
                                                     <span class="price"> {{ food.price }} huf</span>
 
                                                     <a href="#" class="decrease_cart" style="margin-right:28px;"><i class="icon-delete text-color"></i></a>
-                                                    <label for="qty" id="qty"> 0 </label>
+                                                    <!-- making the id dynamic by appending food.id -->
+
+                                                    <label id="qty-{{food.id}}"> 0 </label>
+
                                                     <a href="#" class="add_to_cart" data-id ="{{ food.id }}" data-url="{% url 'add_to_cart' food.id %}"><i class="icon-plus4 text-color"></i></a>
                                                     
                                                 </div>
@@ -134,8 +137,12 @@
                                             {% endfor %}
                                         </ul>
                                         {% endfor %}
-
                                     </div>
+
+                                    {% for item in cart_items %}
+                                    <span id="qty-{{item.fooditem.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}"> {{ item.quantity }} </span>                              
+                                    {% endfor %}
+
                                 </div>
                             </div>
 

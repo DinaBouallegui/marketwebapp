@@ -91,7 +91,6 @@ $(document).ready(function() {
 
         data= {
             food_id: food_id,
-
         }
         //once it takes the food id, it will send a request to this particular url using the Ajax
         $.ajax({
@@ -102,6 +101,13 @@ $(document).ready(function() {
                 console.log(response)
             }
         })
+    })
+
+    // here placing the cart item quantity on loan
+    $('.item_qty').each(function() {
+        var the_id = $(this).attr('id')
+        var qty = $(this).attr('data-qty')
+        $('#' + the_id).html(qty)
     })
 
 });
