@@ -165,6 +165,7 @@ $(document).ready(function() {
                 } else {                   
                     $('#cart_counter').html(response.cart_counter['cart_count'])
                     swal(response.status, response.message, "success")
+                    removeCartItem(0,cart_id)
                 }
             }
         })
@@ -172,3 +173,11 @@ $(document).ready(function() {
 });
 
 
+// deleting the cart item if its quantity is 0
+
+function removeCartItem(cart_item_quantity, cart_id){ 
+    if (cart_item_quantity<=0){
+        // remove the cart item element
+        document.getElementById("cart-item-"+cart_id).remove()
+    }
+}
