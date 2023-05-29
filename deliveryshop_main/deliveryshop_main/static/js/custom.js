@@ -96,10 +96,14 @@ $(document).ready(function() {
             url: url,
             success: function(response){
                 console.log(response)
-                if(response.status == 'Failed') {
-                    console.log('raise the error message')
-                }
-                else {                   
+                if(response.status == 'login_required') {
+                    swal(response.message,'','info').then(function() {
+                        window.location = '/login';
+                    })
+                } 
+                if (response.status== 'Failed') {
+                    swal(response.message,'','error')
+                } else {                   
                     $('#cart_counter').html(response.cart_counter['cart_count'])
                     $('#qty-'+food_id).html(response.qty); 
                 }
@@ -127,10 +131,13 @@ $(document).ready(function() {
             url: url,
             success: function(response){
                 console.log(response)
-                if(response.status == 'Failed') {
-                    console.log(response)
-                }
-                else {                   
+                if(response.status == 'login_required') {
+                    swal(response.message,'','info').then(function() {
+                        window.location = '/login';
+                    })
+                } else if(response.status == 'Failed') {
+                    swal(response.message,'','error')
+                } else {                   
                     $('#cart_counter').html(response.cart_counter['cart_count'])
                     $('#qty-'+food_id).html(response.qty); 
                 }

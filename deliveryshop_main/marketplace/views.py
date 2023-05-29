@@ -46,7 +46,6 @@ def vendor_detail(request, vendor_slug):
     return render(request,'marketplace/vendor_detail.html', context)
 
 def add_to_cart(request, food_id):
-    try:
         # Your code goes here.
         # Adding the logic for adding a product to the cart
         if request.user.is_authenticated:
@@ -74,16 +73,11 @@ def add_to_cart(request, food_id):
                 return JsonResponse({'status': 'Failed', 'message': 'The request is invalid!'})
         # It will be sent to the user when they're not logged in
         else:
-            return JsonResponse({'status': 'Failed', 'message': 'Please log in to continue'})
-    except Exception as e:
-            if request.is_ajax():
-                return JsonResponse({'status': 'Failed', 'message': 'Unexpected error occurred: {}'.format(e), 'traceback': traceback.format_exc()}, status=500)
-            else:
-                raise e
+            return JsonResponse({'status': 'login_required', 'message': 'No no no :(( Please login to continue'})
+  
     
     
 def decrease_cart(request,food_id): 
-    try:
         # Your code goes here.
         # Adding the logic for deleting a product to the cart
         if request.user.is_authenticated:
@@ -113,9 +107,4 @@ def decrease_cart(request,food_id):
                 return JsonResponse({'status': 'Failed', 'message': 'The request is invalid!'})
         # It will be sent to the user when they're not logged in
         else:
-            return JsonResponse({'status': 'Failed', 'message': 'Please log in to continue'})
-    except Exception as e:
-            if request.is_ajax():
-                return JsonResponse({'status': 'Failed', 'message': 'Unexpected error occurred: {}'.format(e), 'traceback': traceback.format_exc()}, status=500)
-            else:
-                raise e
+            return JsonResponse({'status': 'login_required', 'message': 'No no no :(( Please login to continue'})
