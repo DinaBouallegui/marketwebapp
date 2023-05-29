@@ -166,6 +166,8 @@ $(document).ready(function() {
                     $('#cart_counter').html(response.cart_counter['cart_count'])
                     swal(response.status, response.message, "success")
                     removeCartItem(0,cart_id)
+                    // check if the cart is empty, i will show the cart is empty message
+                    checkEmptyCart();
                 }
             }
         })
@@ -179,5 +181,13 @@ function removeCartItem(cart_item_quantity, cart_id){
     if (cart_item_quantity<=0){
         // remove the cart item element
         document.getElementById("cart-item-"+cart_id).remove()
+    }
+}
+
+// a function that checks if cart is empty
+function checkEmptyCart(){
+    var cart_counter = document.getElementById('cart_counter').innerHTML
+    if (cart_counter == 0){
+        document.getElementById("empty-cart").style.display = "block";
     }
 }
