@@ -86,6 +86,25 @@ $(document).ready(function() {
     $('.add_to_cart').on('click',function(e) 
     {
         e.preventDefault();
-        alert('testing00');
+        food_id = $(this).attr('data-id');
+        url =$(this).attr('data-url')
+
+        data= {
+            food_id: food_id,
+
+        }
+        //once it takes the food id, it will send a request to this particular url using the Ajax
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: data,
+            success: function(response){
+                
+                console.log(response)
+            }
+        })
     })
+
 });
+
+
