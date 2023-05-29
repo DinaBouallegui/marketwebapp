@@ -145,6 +145,30 @@ $(document).ready(function() {
         })
     })
 
+
+    // deleting the cart item here
+    $('.delete_cart').on('click',function(e) 
+    {
+        e.preventDefault();
+
+        cart_id = $(this).attr('data-id');
+        url =$(this).attr('data-url')
+
+        //once it takes the food id, it will send a request to this particular url using the Ajax
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response){
+                console.log(response)
+                if(response.status == 'Failed') {
+                    swal(response.message,'','error')
+                } else {                   
+                    $('#cart_counter').html(response.cart_counter['cart_count'])
+                    swal(response.status, response.message, "success")
+                }
+            }
+        })
+    })
 });
 
 
