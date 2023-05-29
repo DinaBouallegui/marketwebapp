@@ -108,3 +108,7 @@ def decrease_cart(request,food_id):
         # It will be sent to the user when they're not logged in
         else:
             return JsonResponse({'status': 'login_required', 'message': 'No no no :(( Please login to continue'})
+
+def cart(request):
+    print('test')
+    return render(request,'marketplace/cart.html')

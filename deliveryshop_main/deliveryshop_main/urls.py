@@ -18,11 +18,16 @@ from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from marketplace import views as cartViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('',include('useraccounts.urls')),
     #whenever someone comes to accounts, it will be forwarded to useraccounts app
-    path('marketplace/',include('marketplace.urls'))
+    path('marketplace/',include('marketplace.urls')),
+
+    #for cart page
+    path('cart/', cartViews.cart, name='cart'),
+
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
