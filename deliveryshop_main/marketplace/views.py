@@ -132,3 +132,14 @@ def delete_cart(request,cart_id):
                 return JsonResponse({'status': 'Failed', 'message': 'This  Cart Item does not exist, you cannot delete'}) 
         else: 
             return JsonResponse({'status': 'Failed', 'message': 'The request is invalid!'})
+
+def search(request):
+    address = request.GET['address']
+    latitude = request.GET['lat']
+    longitude = request.GET['lng']
+    radius = request.GET['radius']
+    restaurant_name = request.GET['restaurant_name']
+    print(address,latitude,longitude,radius)
+
+    # whenevr someone clicks on search button it goes to market place page
+    return render(request,'marketplace/listings.html')

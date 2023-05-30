@@ -29,5 +29,7 @@ urlpatterns = [
 
     #for cart page
     path('cart/', cartViews.cart, name='cart'),
+    # search path
+    path('search/', cartViews.search, name='search'),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -19,3 +19,7 @@ z-index:99;
     font-size: 12px;
     cursor: pointer;
 }
+
+.main-search.fancy .field-holder .select-location input[type="text"]{
+    color:black !important;
+}
