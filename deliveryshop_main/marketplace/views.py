@@ -9,6 +9,7 @@ from menu.models import Category, FoodItem
 from vendor.models import Vendor
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # Create your views here.
 
@@ -141,8 +142,14 @@ def search(request):
     keyword = request.GET['keyword']
     #print(address,latitude,longitude,radius)
 
+    # get vendor ids that has the food item the user is looking for
+    # we get the food items that matches with the keywords
+    fetch_vendors_by_fooditems = FoodItem.objects.filter(food_title__icontains=keyword, is_available=True).values_list('vendor', flat=True)
+   
+   # Q object because i want to filter these data with or condition for complex queries 
+   # Q query comes gfrom django db model
+    vendors = Vendor.objects.filter(Q(id__in=fetch_vendors_by_fooditems) | Q(vendor_name__icontains=keyword, is_approved=True, user__is_active=True))
     # match with the restauran name, user approved should be true and user shoul be active
-    vendors = Vendor.objects.filter(vendor_name__icontains=keyword, is_approved=True, user__is_active=True)
     vendor_count = vendors.count()
     context = {
         'vendors': vendors,
