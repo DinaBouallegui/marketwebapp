@@ -138,8 +138,16 @@ def search(request):
     latitude = request.GET['lat']
     longitude = request.GET['lng']
     radius = request.GET['radius']
-    restaurant_name = request.GET['restaurant_name']
-    print(address,latitude,longitude,radius)
+    keyword = request.GET['keyword']
+    #print(address,latitude,longitude,radius)
+
+    # match with the restauran name, user approved should be true and user shoul be active
+    vendors = Vendor.objects.filter(vendor_name__icontains=keyword, is_approved=True, user__is_active=True)
+    vendor_count = vendors.count()
+    context = {
+        'vendors': vendors,
+        'vendor_count' : vendor_count,
+    }
 
     # whenevr someone clicks on search button it goes to market place page
-    return render(request,'marketplace/listings.html')
+    return render(request,'marketplace/listings.html', context)

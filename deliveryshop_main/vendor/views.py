@@ -92,8 +92,9 @@ def add_category(request):
             # assigned the login user to the category vendor field
             category.vendor = get_vendor(request)
             # saligify will generate slug based on categoy_name
-            category.slug = slugify(category_name)
-            form.save()
+            category.save() # the category id will be generated
+            category.slug = slugify(category_name)+'-'+str(category.id) # categoryname-categoryid
+            category.save()
             messages.success(request,'Great!Category added successfully!')
             return redirect('menu_builder')
         else: 
