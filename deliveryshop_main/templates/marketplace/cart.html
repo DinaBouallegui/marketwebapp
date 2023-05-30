@@ -44,8 +44,7 @@
                                                 <div class="price-holder">
                                                     <span class="price"> {{ item.fooditem.price }} huf</span>
 
-                                                    <a href="#" class="decrease_cart" data-id="{{ item.fooditem.id }}"
-                                                        data-url="{% url 'decrease_cart' item.fooditem.id %}"
+                                                    <a href="#" class="decrease_cart" data-id="{{ item.fooditem.id }}"data-url="{% url 'decrease_cart' item.fooditem.id %}" id="{{item.id}}"
                                                         style="margin-right:28px;"><i
                                                             class="fa fa-minus text-color"></i></a>
                                                     <!-- making the id dynamic by appending food.id -->

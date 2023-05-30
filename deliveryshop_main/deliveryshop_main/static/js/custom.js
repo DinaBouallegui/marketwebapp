@@ -123,7 +123,8 @@ $(document).ready(function() {
     {
         e.preventDefault();
         food_id = $(this).attr('data-id');
-        url =$(this).attr('data-url')
+        url =$(this).attr('data-url');
+        cart_id = $(this).attr('id');
 
         //once it takes the food id, it will send a request to this particular url using the Ajax
         $.ajax({
@@ -140,6 +141,10 @@ $(document).ready(function() {
                 } else {                   
                     $('#cart_counter').html(response.cart_counter['cart_count'])
                     $('#qty-'+food_id).html(response.qty); 
+                    if (window.location.pathname=='/cart/'){
+                        removeCartItem(response.qty, cart_id);
+                        checkEmptyCart();
+                    }
                 }
             }
         })
@@ -176,12 +181,11 @@ $(document).ready(function() {
 
 
 // deleting the cart item if its quantity is 0
-
 function removeCartItem(cart_item_quantity, cart_id){ 
-    if (cart_item_quantity<=0){
-        // remove the cart item element
-        document.getElementById("cart-item-"+cart_id).remove()
-    }
+        if (cart_item_quantity<=0){
+            // remove the cart item element
+            document.getElementById("cart-item-"+cart_id).remove()
+        } 
 }
 
 // a function that checks if cart is empty
