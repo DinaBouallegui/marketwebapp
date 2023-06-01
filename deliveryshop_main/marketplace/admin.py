@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cart
+from .models import Cart,Tax
 # Register your models here.
 
 class CartAdmin(admin.ModelAdmin):
@@ -7,3 +7,7 @@ class CartAdmin(admin.ModelAdmin):
 
 admin.site.register(Cart,CartAdmin)
 
+class TaxAdmin(admin.ModelAdmin):
+    list_display = ('tax_type','tax_percentage','is_active')
+#registering tax here
+admin.site.register(Tax)
