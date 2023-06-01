@@ -99,18 +99,18 @@
                                             <li style="list-style-type: none;">
                                                 Subtotal
                                                 <span class="price float-right"> 
-                                                    <span class="currency"> $ </span>
                                                     <span id="subtotal"> {{ subtotal }} </span>
+                                                    <span class="currency"> huf </span>
                                                 </span>
                                             </li>
                                             
                                             {% for key, value in tax_dict.items %}
                                                 {% for i,j in value.items %}
                                                     <li style="list-style-type: none;">
-                                                        {{ key }} <small> ({{ i }})</small>
+                                                        {{ key }} <small> ({{ i }} %)</small>
                                                         <span class="price float-right"> 
-                                                            <span class="currency"> $ </span>
                                                             <span id="tax-{{ key }}"> {{ j }} </span>
+                                                            <span class="currency"> huf </span>
                                                         </span>
                                                     </li>
                                                 {% endfor %}
@@ -119,8 +119,8 @@
                                             <li style="list-style-type: none; font-weight: 600;">
                                                 Total
                                                 <span class="price float-right"> 
-                                                    <span class="currency"> $ </span>
                                                     <span id="total"> {{ grand_total }} </span>
+                                                    <span class="currency"> huf </span>
                                                 </span>
                                             </li>
 

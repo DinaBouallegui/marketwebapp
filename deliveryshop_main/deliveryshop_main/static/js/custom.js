@@ -110,10 +110,9 @@ $(document).ready(function() {
                     // grandtotal and subtotal tax
                     applyCartAmounts(
                         response.cart_amount['subtotal'],
-                        response.cart_amount['tax'],
+                        response.cart_amount['tax_dict'],
                         response.cart_amount['grand_total']
                     )
-
                 }
             }
         })
@@ -153,7 +152,7 @@ $(document).ready(function() {
                      // grandtotal and subtotal tax
                     applyCartAmounts(
                         response.cart_amount['subtotal'],
-                        response.cart_amount['tax'],
+                        response.cart_amount['tax_dict'],
                         response.cart_amount['grand_total']
                     )
 
@@ -188,12 +187,12 @@ $(document).ready(function() {
                     swal(response.status, response.message, "success")
 
                      // grandtotal and subtotal tax
-                     applyCartAmounts(
+                    applyCartAmounts(
                         response.cart_amount['subtotal'],
-                        response.cart_amount['tax'],
+                        response.cart_amount['tax_dict'],
                         response.cart_amount['grand_total']
                     )
-                    
+
                     removeCartItem(0,cart_id)
                     // check if the cart is empty, i will show the cart is empty message
                     checkEmptyCart();
@@ -203,7 +202,7 @@ $(document).ready(function() {
     })
 
 
-    // deleting the cart item if its quantity is 0
+    // delete the cart item if its quantity is 0
     function removeCartItem(cart_item_quantity, cart_id) {
         if (cart_item_quantity <= 0) {
             // remove the cart item element
@@ -220,17 +219,29 @@ $(document).ready(function() {
     }
 
     // here cart amounts apply
-    function applyCartAmounts(subtotal,tax,grand_total) {
+    function applyCartAmounts(subtotal,tax_dict,grand_total) {
         // should run only if the user is inside the cart page
         //whatever subtotal, tags, grandtotal i get will be passed inside the html of the id=subtotal/id=grandtotal ect
         if (window.location.pathname =='/cart/'){
             $('#subtotal').html(subtotal)
-            $('#tax').html(tax)
             $('#total').html(grand_total)
+
+            //loop through thet tax dict
+
+            for (i in tax_dict){
+                console.log(i)
+                for (i in tax_dict)
+                {
+                    console.log(tax_dict[i])
+                    
+                    for (j in tax_dict[i]){
+                        console.log(tax_dict[i][j])
+                        $('#tax-'+i).html(tax_dict[i][j])
+                    }
+                }
+            }
         }
     }
-
-
 
 });
 
