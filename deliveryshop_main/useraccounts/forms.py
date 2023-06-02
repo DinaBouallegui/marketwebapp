@@ -35,3 +35,11 @@ class UserProfileForm(forms.ModelForm):
         fields = ['profile_picture','cover_photo','address','country',
                   'state','city','pincode','longitude','latitude']
     
+
+# using a diff user form
+# creating another user form with only firstname/lastname/number
+
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','phone_number']

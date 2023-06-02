@@ -14,6 +14,8 @@ urlpatterns = [
     path('vendorDashboard/', views.vendorDashboard,name='vendorDashboard'),
     path('activate/<uidb64>/<token>/', views.activate,name='activate'),
     
-    path('vendor/', include('vendor.urls'))
+    path('vendor/', include('vendor.urls')),
+#changes
+    path('customer/', include('customers.urls'))
 
 ]
