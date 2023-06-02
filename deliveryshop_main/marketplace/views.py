@@ -1,6 +1,8 @@
 import traceback
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+
+from useraccounts.models import UserProfile
 
 from .context_processors import get_cart_amounts, get_cart_counter
 from .models import Cart
@@ -161,9 +163,34 @@ def search(request):
     return render(request,'marketplace/listings.html', context)
 
 
+#users should be logged in
+@login_required(login_url='login')
 def checkout(request):
-    form = OrderForm()
+    cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
+    cart_count = cart_items.count()
+    if cart_count <=0:
+        return redirect('marketpalce')
+    
+    # whatever data there is in the order model will be prepopulated in this form
+    # assign the value of the logged in user to this order form
+    # form = OrderForm(initial={'first_name':'Rathan'})
+    user_profile = UserProfile.objects.get(user=request.user)
+    #initial values 
+    #when the form is empty, it renders the default values
+    default_values = {
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'phone': request.user.phone_number,
+        'email':request.user.email,
+        'address': user_profile.address,
+        'country': user_profile.country,
+        'state': user_profile.state,
+        'city': user_profile.city,
+        'pin_code': user_profile.pincode,
+    }
+    form = OrderForm(initial=default_values)
     context = {
-        'form':form,
+        'form': form,
+        'cart_items': cart_items,
     }
     return render(request,'marketplace/checkout.html',context)
