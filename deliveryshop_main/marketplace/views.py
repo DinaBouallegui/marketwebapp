@@ -169,7 +169,7 @@ def checkout(request):
     cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
     cart_count = cart_items.count()
     if cart_count <=0:
-        return redirect('marketpalce')
+        return redirect('marketplace')
     
     # whatever data there is in the order model will be prepopulated in this form
     # assign the value of the logged in user to this order form
