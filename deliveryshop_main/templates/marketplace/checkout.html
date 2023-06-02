@@ -25,7 +25,7 @@
                             <div id="home" class="tab-pane in active">
                                 <div class="menu-itam-holder">                               
                                     <div id="menu-item-list-6272" class="menu-itam-list">                               
-                                       <form action="#" method="POST">
+                                       <form action="{% url 'place_order' %}" method="POST">
                                         {% csrf_token %}
 
                                         <!-- using bootstrap classes for the form -->

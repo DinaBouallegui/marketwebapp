@@ -34,4 +34,8 @@ urlpatterns = [
     #Checkout 
     path('checkout/', cartViews.checkout, name='checkout'),
 
+    #Orders
+    path('orders/', include('orders.urls')),
+
+
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
