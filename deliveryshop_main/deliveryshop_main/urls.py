@@ -31,6 +31,7 @@ urlpatterns = [
     path('cart/', cartViews.cart, name='cart'),
     # search path
     path('search/', cartViews.search, name='search'),
-    
+    #Checkout 
+    path('checkout/', cartViews.checkout, name='checkout'),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

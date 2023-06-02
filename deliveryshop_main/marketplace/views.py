@@ -6,6 +6,7 @@ from .context_processors import get_cart_amounts, get_cart_counter
 from .models import Cart
 from menu.models import Category, FoodItem
 
+from orders.forms import OrderForm
 from vendor.models import Vendor
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
@@ -158,3 +159,11 @@ def search(request):
 
     # whenevr someone clicks on search button it goes to market place page
     return render(request,'marketplace/listings.html', context)
+
+
+def checkout(request):
+    form = OrderForm()
+    context = {
+        'form':form,
+    }
+    return render(request,'marketplace/checkout.html',context)
