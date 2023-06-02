@@ -5,6 +5,7 @@ from marketplace.models import Cart
 from .models import Order
 from .forms import OrderForm
 import simplejson as json
+from .utils import generate_order_number
 
 # Create your views here.
 def place_order(request):
@@ -44,8 +45,9 @@ def place_order(request):
             # is_ordered by default its false, don't need to put it 
             # created_at / updated_at will be automatically updated
             #order_number update here 
-            order.order_number ='345'
-            order.save()
+            order.save() # here the pk or order id is generated
+            order.order_number = generate_order_number(order.id)
+            order.save() # once generated, should save again
             return redirect('place_order')        
         else:
             print(form.errors)
