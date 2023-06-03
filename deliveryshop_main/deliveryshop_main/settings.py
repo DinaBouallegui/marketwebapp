@@ -75,6 +75,7 @@ TEMPLATES = [
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
                 'useraccounts.context_processors.get_user_profile',
+                'useraccounts.context_processors.get_paypal_client_id',
             ],
         },
     },
@@ -170,3 +171,6 @@ DEFAULT_FROM_EMAIL = 'Dinas Diner Delivery <dinabouallegui0@gmail.com>'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 GOOGLE_API_KEY = 'AIzaSyCX8iv1MAFd4joepHI6SreEMcdYbZAz_MI'
+PAYPAL_CLIENT_ID = 'AQrlPfxDly_SvJiOIHV6XI0jyfuMB_OZ1t0UXUruY4I-zUKduAMBF1oVsW-w4_ajTEPFIL5F0Ec946Ib'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
