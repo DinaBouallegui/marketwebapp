@@ -17,5 +17,3 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(Order,OrderAdmin)
 admin.site.register(OrderedFood)
 admin.site.register(Payment)
-
-

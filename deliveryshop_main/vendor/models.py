@@ -1,4 +1,5 @@
 from django.db import models
+from useraccounts.utils import send_notification
 from useraccounts.models import User, UserProfile
 
 
@@ -16,3 +17,24 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.vendor_name
+    def save(self,*args,**kwargs):
+        if self.pk is not None:
+
+            orig = Vendor.objects.get(pk=self.pk)
+            if orig.is_approved != self.is_approved:
+                mail_template ='useraccounts/emails/admin_approval_email.html'
+                context = {
+                    'user': self.user,
+                    'is_approved': self.is_approved,
+                    'to_email': self.user.email,
+                }
+                if self.is_approved == True:
+                    # sending notification email
+                    mail_subject = "congratulations! your restaurant has been approved"
+                    send_notification(mail_subject,mail_template,context)
+                else: 
+                    # send notification email
+                    mail_subject="we're sorry! you are not eligible for publishing your food menu"
+                    send_notification(mail_subject,mail_template,context)
+
+        return super(Vendor,self).save(*args,**kwargs)
