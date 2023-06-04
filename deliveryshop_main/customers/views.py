@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib import messages
+from orders.models import Order
 # importing the user form
 from useraccounts.forms import UserProfileForm,UserInfoForm
 from django.contrib.auth.decorators import login_required
@@ -36,3 +37,10 @@ def customerprofile(request):
         'profile': profile,
     }
     return render(request,'customers/customerprofile.html',context)
+
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user, is_ordered = True)
+    context ={
+        'orders':orders,
+    }
+    return render(request, 'customers/my_orders.html',context)
