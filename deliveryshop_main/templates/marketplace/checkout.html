@@ -111,7 +111,7 @@
                                                 </div>
                                                 <div class="price-and-quantity-holder" style="display: flex; justify-content: space-between;">
                                                     <div class="price-holder">
-                                                        <span class="price"> {{ item.fooditem.price }} huf</span>
+                                                        <span class="price"> {{ item.fooditem.price }} $ </span>
                                                     </div>
                                                 
                                                     <div class="quantity">
@@ -129,7 +129,7 @@
                                                 Subtotal
                                                 <span class="price float-right"> 
                                                     <span id="subtotal"> {{ subtotal }} </span>
-                                                    <span class="currency"> huf </span>
+                                                    <span class="currency"> $ </span>
                                                 </span>
                                             </li>
                                             
@@ -139,7 +139,7 @@
                                                         {{ key }} <small> ({{ i }} %)</small>
                                                         <span class="price float-right"> 
                                                             <span id="tax-{{ key }}"> {{ j }} </span>
-                                                            <span class="currency"> huf </span>
+                                                            <span class="currency"> $ </span>
                                                         </span>
                                                     </li>
                                                 {% endfor %}
@@ -149,7 +149,7 @@
                                                 Total
                                                 <span class="price float-right"> 
                                                     <span id="total"> {{ grand_total }} </span>
-                                                    <span class="currency"> huf </span>
+                                                    <span class="currency"> $ </span>
                                                 </span>
                                             </li>
 
